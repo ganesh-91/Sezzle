@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: "Open Sans", sans-serif;
+            font-size: 18px;
+            color: #444;
+            text-align: center;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #calculator {
+            width: 250px;
+            height: 400px;
+            /* position: absolute; */
+            background-color: grey;
+            padding: 15px;
+            box-shadow: 5px 5px 5px 5px;
+            margin: auto;
+        }
+
+        .button {
+            width: 19%;
+            height: 70px;
+            box-shadow: 1px 1px 1px 1px;
+            border: 1px solid black;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .buttonContainer {
+            width: 95%;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        #screen {
+            width: 90%;
+            height: 15%;
+            background-color: green;
+            margin: auto;
+            color: white;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        #screen #output {
+            width: 100%;
+            height: 100%;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='wrapper'>
+        <h1>Calculator</h1>
+        <div id="calculator">
+            <div id="screen">
+                <input type="text" id="output" value="" />
+            </div>
+            <div class="buttonContainer">
+                <button class="button" value="7">
+                    <h1 class="number">7</h1>
+                </button>
+                <button class="button" value="8">
+                    <h1 class="number">8</h1>
+                </button>
+                <button class="button" value="9">
+                    <h1 class="number">9</h1>
+                </button>
+                <button class="button" value="+">
+                    <h1 class="number">+</h1>
+                </button>
+                <button class="button" value="4">
+                    <h1 class="number">4</h1>
+                </button>
+                <button class="button" value="5">
+                    <h1 class="number">5</h1>
+                </button>
+                <button class="button" value="6">
+                    <h1 class="number">6</h1>
+                </button>
+                <button class="button" value="-">
+                    <h1 class="operator">-</h1>
+                </button>
+                <button class="button" value="1">
+                    <h1 class="number">1</h1>
+                </button>
+                <button class="button" value="2">
+                    <h1 class="number">2</h1>
+                </button>
+                <button class="button" value="3">
+                    <h1 class="number">3</h1>
+                </button>
+                <button class="button" value="*">
+                    <h1 class="operator">*</h1>
+                </button>
+                <button class="button" value=".">
+                    <h1 class="operator">.</h1>
+                </button>
+                <button class="button" value="0">
+                    <h1 class="number">0</h1>
+                </button>
+                <button class="button" value="=">
+                    <h1 class="operator">=</h1>
+                </button>
+                <button class="button" value="/">
+                    <h1 class="operator">/</h1>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let resultDisplayed = false;
+        
+        document.getElementById('output').addEventListener('paste', (e) => {
+            e.preventDefault()
+        });
+
+        document.getElementById('output').addEventListener('keypress', (e) => {
+            const key = e.keyCode ? e.keyCode : e.which;
+            if (key === 42 ||
+                key === 43 ||
+                key === 45 ||
+                key === 46 ||
+                key === 47 ||
+                (key >= 48 && key <= 57)) {
+                return true
+            }
+            if (key === 13) {
+                getResult();
+            }
+            e.preventDefault();
+        });
+
+        const getButtonPress = () => {
+            let input = this.value;
+            if (input == "=") {
+                getResult();
+            } else if (resultDisplayed && input < 10) {
+                document.getElementById("output").value = input;
+                resultDisplayed = false;
+            } else {
+                document.getElementById("output").value += input;
+                resultDisplayed = false;
+            }
+        }
+
+        const getResult = () => {
+            try {
+                const result = document.getElementById("output").value;
+                const resultCalculated = eval(result);
+                console.log(resultCalculated);
+                document.getElementById("output").value = resultCalculated;
+                resultDisplayed = true;
+            } catch (e) {
+                console.log("Invalid expression");
+                document.getElementById("output").value = "";
+            }
+        }
+
+        window.onload = () => {
+            [].slice.call(document.getElementsByClassName("button")).forEach(function (e) {
+                e.addEventListener('click', getButtonPress);
+            });
+        };
+    </script>
+</body>
+
+</html>
