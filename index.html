@@ -205,6 +205,7 @@
 
             this.getButtonPress = (e) => {
                 let input = e.target.value;
+                document.getElementById("error").innerHTML = "";
                 if (input == "=") {
                     this.showResult();
                 } else if (this.resultShown) {
@@ -264,7 +265,7 @@
             //     e.preventDefault();
             // });
 
-            [].slice.call(document.getElementsByClassName("button")).forEach(function (e) {
+            document.querySelectorAll(".button").forEach(function (e) {
                 e.addEventListener('click', this.getButtonPress);
             });
 
