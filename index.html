@@ -105,6 +105,10 @@
             margin-top: 6px;
         }
 
+        .calci-button:nth-child(-n + 2) {
+            width: 160px;
+        }
+
         #error {
             color: red;
             margin-top: 10px;
@@ -121,22 +125,25 @@
                 <input type="text" id="output" value="" />
             </div>
             <div class="buttonContainer">
-                <button class="calci-button button" value="7">7</button>
-                <button class="calci-button button" value="8">8</button>
-                <button class="calci-button button" value="9">9</button>
-                <button class="calci-button button" value="+">+</button>
-                <button class="calci-button button" value="4">4</button>
-                <button class="calci-button button" value="5">5</button>
-                <button class="calci-button button" value="6">6</button>
-                <button class="calci-button button" value="-">-</button>
-                <button class="calci-button button" value="1">1</button>
-                <button class="calci-button button" value="2">2</button>
-                <button class="calci-button button" value="3">3</button>
-                <button class="calci-button button" value="*">*</button>
-                <button class="calci-button button" value=".">.</button>
-                <button class="calci-button button" value="0">0</button>
-                <button class="calci-button button" value="=">=</button>
-                <button class="calci-button button" value="/">/</button>
+                <button class="calci-button button" value="CE">CE</button>
+                <button class="calci-button button" value="C">
+                    <- </button>
+                        <button class="calci-button button" value="7">7</button>
+                        <button class="calci-button button" value="8">8</button>
+                        <button class="calci-button button" value="9">9</button>
+                        <button class="calci-button button" value="+">+</button>
+                        <button class="calci-button button" value="4">4</button>
+                        <button class="calci-button button" value="5">5</button>
+                        <button class="calci-button button" value="6">6</button>
+                        <button class="calci-button button" value="-">-</button>
+                        <button class="calci-button button" value="1">1</button>
+                        <button class="calci-button button" value="2">2</button>
+                        <button class="calci-button button" value="3">3</button>
+                        <button class="calci-button button" value="*">*</button>
+                        <button class="calci-button button" value=".">.</button>
+                        <button class="calci-button button" value="0">0</button>
+                        <button class="calci-button button" value="=">=</button>
+                        <button class="calci-button button" value="/">/</button>
             </div>
         </div>
         <div id="error"></div>
@@ -158,18 +165,16 @@
                 return a * b;
             }
 
-            this.equal = () => { }
-
             this.controller = (a, operator, b) => {
                 switch (operator) {
                     case '+':
-                        return this.add(parseFloat(a), parseFloat(b))
+                        return this.add(parseFloat(a), parseFloat(b));
                     case '-':
-                        return this.subtract(parseFloat(a), parseFloat(b))
+                        return this.subtract(parseFloat(a), parseFloat(b));
                     case '/':
-                        return this.divide(parseFloat(a), parseFloat(b))
+                        return this.divide(parseFloat(a), parseFloat(b));
                     case '*':
-                        return this.multiply(parseFloat(a), parseFloat(b))
+                        return this.multiply(parseFloat(a), parseFloat(b));
                 }
             }
 
@@ -181,7 +186,7 @@
 
             const alphabetsRegex = /[A-Za-z]+/;
             this.resultShown = false;
-            const operations = ["/", "*", "+", "-"]
+            const operations = ["/", "*", "+", "-"];
 
             this.parseInput = (expression) => {
                 try {
@@ -202,6 +207,19 @@
                 let input = e.target.value;
                 if (input == "=") {
                     this.showResult();
+                } else if (this.resultShown) {
+                    document.getElementById("input").value = e.target.value;
+                    document.getElementById("output").value = '';
+                    this.resultShown = false;
+                } else if (input == "C") {
+                    let value = document.getElementById("input").value;
+                    value = value.substring(0, value.length - 1);
+                    document.getElementById("input").value = value;
+                    this.resultShown = false;
+                } else if (input == "CE") {
+                    document.getElementById("output").value = "";
+                    document.getElementById("input").value = "";
+                    this.resultShown = false;
                 } else {
                     document.getElementById("input").value += input;
                     this.resultShown = false;
@@ -209,11 +227,12 @@
             }
 
             this.getResult = (expression) => {
-                let parsedInput = this.parseInput(expression)
+                let parsedInput = this.parseInput(expression);
                 if (parsedInput) {
+                    if (parsedInput.length < 3) return null
                     for (let index = 0; index < operations.length; index++) {
                         while (parsedInput.includes(operations[index])) {
-                            const operatorIndex = parsedInput.indexOf(operations[index])
+                            const operatorIndex = parsedInput.indexOf(operations[index]);
                             const val = myCalc.controller(
                                 parsedInput[operatorIndex - 1],
                                 parsedInput[operatorIndex],
@@ -225,11 +244,11 @@
                     let finalResult = parsedInput[0];
                     this.resultShown = true;
                     if (Math.round(finalResult) !== finalResult) {
-                        return finalResult.toFixed(2)
+                        return finalResult.toFixed(1);
                     }
-                    return finalResult
+                    return finalResult;
                 } else {
-                    return '0'
+                    return '0';
                 }
             }
 
@@ -237,11 +256,12 @@
                 const inputElement = document.getElementById("input");
                 const outputElement = document.getElementById("output");
                 const result = this.getResult(inputElement.value);
+                if (!result) return null;
                 outputElement.value = result;
             }
 
             document.getElementById('input').addEventListener('paste', (e) => {
-                e.preventDefault()
+                e.preventDefault();
             });
 
             [].slice.call(document.getElementsByClassName("button")).forEach(function (e) {
@@ -257,7 +277,7 @@
                     key === 46 ||
                     key === 47 ||
                     (key >= 48 && key <= 57)) {
-                    return true
+                    return true;
                 }
                 if (key === 13) {
                     !this.resultShown && this.showResult();
