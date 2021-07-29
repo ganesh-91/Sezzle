@@ -7,6 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <style>
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font: 500 1.1em sans-serif;
+            background-color: mintcream;
+            color: darkslategray;
+        }
+
+        #calculator,
+        .calci-button,
+        #screen {
+            -webkit-box-shadow: 1px 1px 2px darkslateblue;
+            box-shadow: 1px 1px 2px darkslateblue;
+            border-radius: 5px;
+        }
+
         body {
             background-color: white;
             font-family: "Open Sans", sans-serif;
@@ -19,44 +35,79 @@
         }
 
         #calculator {
-            width: 250px;
-            height: 400px;
-            /* position: absolute; */
-            background-color: grey;
-            padding: 15px;
-            box-shadow: 5px 5px 5px 5px;
-            margin: auto;
+            width: 360px;
+            height: auto;
+            background-color: blanchedalmond;
+            border: 1px solid gray;
+            padding: 2px;
+            text-align: center;
+            margin: 0 auto;
+            -webkit-box-shadow: 1px 1px 2px darkslateblue;
+            box-shadow: 1px 1px 2px darkslateblue;
+            border-radius: 5px;
+            padding: 10px 0;
         }
 
         .button {
-            width: 19%;
-            height: 70px;
-            box-shadow: 1px 1px 1px 1px;
-            border: 1px solid black;
             display: inline-block;
+            background-color: lightgray;
+            width: 71px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            vertical-align: middle;
             margin: 5px;
+            cursor: pointer;
+            outline: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: none;
+            -webkit-box-shadow: 1px 1px 2px darkslateblue;
+            box-shadow: 1px 1px 2px darkslateblue;
+            border-radius: 5px;
+        }
+
+        .calci-button.button:hover {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 0.5px solid gray;
         }
 
         .buttonContainer {
-            width: 95%;
-            margin: auto;
+            background-color: blanchedalmond;
             margin-top: 10px;
         }
 
         #screen {
-            width: 90%;
-            height: 15%;
-            background-color: green;
-            margin: auto;
-            color: white;
+            height: auto;
+            border: 0.5px solid gray;
+            margin: 0 10px;
+        }
+
+        #screen #output,
+        #screen #input {
+            width: 100%;
+            height: 100%;
+            /* font-size: 28px; */
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            padding: 0 5px;
             text-align: right;
-            overflow: hidden;
         }
 
         #screen #output {
-            width: 100%;
-            height: 100%;
-            font-size: 32px;
+            margin-top: 6px;
+        }
+
+        #error {
+            color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -66,115 +117,156 @@
         <h1>Calculator</h1>
         <div id="calculator">
             <div id="screen">
+                <input type="text" id="input" value="7.3*6+3/2-5*6+7-2*5" />
                 <input type="text" id="output" value="" />
             </div>
             <div class="buttonContainer">
-                <button class="button" value="7">
-                    <h1 class="number">7</h1>
-                </button>
-                <button class="button" value="8">
-                    <h1 class="number">8</h1>
-                </button>
-                <button class="button" value="9">
-                    <h1 class="number">9</h1>
-                </button>
-                <button class="button" value="+">
-                    <h1 class="number">+</h1>
-                </button>
-                <button class="button" value="4">
-                    <h1 class="number">4</h1>
-                </button>
-                <button class="button" value="5">
-                    <h1 class="number">5</h1>
-                </button>
-                <button class="button" value="6">
-                    <h1 class="number">6</h1>
-                </button>
-                <button class="button" value="-">
-                    <h1 class="operator">-</h1>
-                </button>
-                <button class="button" value="1">
-                    <h1 class="number">1</h1>
-                </button>
-                <button class="button" value="2">
-                    <h1 class="number">2</h1>
-                </button>
-                <button class="button" value="3">
-                    <h1 class="number">3</h1>
-                </button>
-                <button class="button" value="*">
-                    <h1 class="operator">*</h1>
-                </button>
-                <button class="button" value=".">
-                    <h1 class="operator">.</h1>
-                </button>
-                <button class="button" value="0">
-                    <h1 class="number">0</h1>
-                </button>
-                <button class="button" value="=">
-                    <h1 class="operator">=</h1>
-                </button>
-                <button class="button" value="/">
-                    <h1 class="operator">/</h1>
-                </button>
+                <button class="calci-button button" value="7">7</button>
+                <button class="calci-button button" value="8">8</button>
+                <button class="calci-button button" value="9">9</button>
+                <button class="calci-button button" value="+">+</button>
+                <button class="calci-button button" value="4">4</button>
+                <button class="calci-button button" value="5">5</button>
+                <button class="calci-button button" value="6">6</button>
+                <button class="calci-button button" value="-">-</button>
+                <button class="calci-button button" value="1">1</button>
+                <button class="calci-button button" value="2">2</button>
+                <button class="calci-button button" value="3">3</button>
+                <button class="calci-button button" value="*">*</button>
+                <button class="calci-button button" value=".">.</button>
+                <button class="calci-button button" value="0">0</button>
+                <button class="calci-button button" value="=">=</button>
+                <button class="calci-button button" value="/">/</button>
             </div>
         </div>
+        <div id="error"></div>
     </div>
 
     <script>
+        function Calculator() {
 
-        let resultDisplayed = false;
-        
-        document.getElementById('output').addEventListener('paste', (e) => {
-            e.preventDefault()
-        });
+            this.add = (a, b) => {
+                return a + b;
+            }
+            this.subtract = (a, b) => {
+                return a - b;
+            }
+            this.divide = (a, b) => {
+                return a / b;
+            }
+            this.multiply = (a, b) => {
+                return a * b;
+            }
 
-        document.getElementById('output').addEventListener('keypress', (e) => {
-            const key = e.keyCode ? e.keyCode : e.which;
-            if (key === 42 ||
-                key === 43 ||
-                key === 45 ||
-                key === 46 ||
-                key === 47 ||
-                (key >= 48 && key <= 57)) {
-                return true
-            }
-            if (key === 13) {
-                getResult();
-            }
-            e.preventDefault();
-        });
+            this.equal = () => { }
 
-        const getButtonPress = () => {
-            let input = this.value;
-            if (input == "=") {
-                getResult();
-            } else if (resultDisplayed && input < 10) {
-                document.getElementById("output").value = input;
-                resultDisplayed = false;
-            } else {
-                document.getElementById("output").value += input;
-                resultDisplayed = false;
+            this.controller = (a, operator, b) => {
+                switch (operator) {
+                    case '+':
+                        return this.add(parseFloat(a), parseFloat(b))
+                    case '-':
+                        return this.subtract(parseFloat(a), parseFloat(b))
+                    case '/':
+                        return this.divide(parseFloat(a), parseFloat(b))
+                    case '*':
+                        return this.multiply(parseFloat(a), parseFloat(b))
+                }
             }
+
+
         }
+        const init = () => {
 
-        const getResult = () => {
-            try {
-                const result = document.getElementById("output").value;
-                const resultCalculated = eval(result);
-                console.log(resultCalculated);
-                document.getElementById("output").value = resultCalculated;
-                resultDisplayed = true;
-            } catch (e) {
-                console.log("Invalid expression");
-                document.getElementById("output").value = "";
+            var myCalc = new Calculator();
+
+            const alphabetsRegex = /[A-Za-z]+/;
+            this.resultShown = false;
+            const operations = ["/", "*", "+", "-"]
+
+            this.parseInput = (expression) => {
+                try {
+                    if (expression.match(alphabetsRegex)) {
+                        throw 'Invalid expression';
+                    }
+                    const splitUpExpression = expression.replace(/ /g, "").match(/[^\d()]+|[\d.]+/g);
+                    return splitUpExpression;
+                } catch (error) {
+                    console.log(error);
+                    document.getElementById("input").value = "";
+                    document.getElementById("error").innerHTML = error;
+                    return null;
+                }
             }
-        }
 
-        window.onload = () => {
-            [].slice.call(document.getElementsByClassName("button")).forEach(function (e) {
-                e.addEventListener('click', getButtonPress);
+            this.getButtonPress = (e) => {
+                let input = e.target.value;
+                if (input == "=") {
+                    this.showResult();
+                } else {
+                    document.getElementById("input").value += input;
+                    this.resultShown = false;
+                }
+            }
+
+            this.getResult = (expression) => {
+                let parsedInput = this.parseInput(expression)
+                if (parsedInput) {
+                    for (let index = 0; index < operations.length; index++) {
+                        while (parsedInput.includes(operations[index])) {
+                            const operatorIndex = parsedInput.indexOf(operations[index])
+                            const val = myCalc.controller(
+                                parsedInput[operatorIndex - 1],
+                                parsedInput[operatorIndex],
+                                parsedInput[operatorIndex + 1])
+                            parsedInput[operatorIndex - 1] = val;
+                            parsedInput.splice(operatorIndex, 2);
+                        }
+                    }
+                    let finalResult = parsedInput[0];
+                    this.resultShown = true;
+                    if (Math.round(finalResult) !== finalResult) {
+                        return finalResult.toFixed(2)
+                    }
+                    return finalResult
+                } else {
+                    return '0'
+                }
+            }
+
+            this.showResult = () => {
+                const inputElement = document.getElementById("input");
+                const outputElement = document.getElementById("output");
+                const result = this.getResult(inputElement.value);
+                outputElement.value = result;
+            }
+
+            document.getElementById('input').addEventListener('paste', (e) => {
+                e.preventDefault()
             });
+
+            [].slice.call(document.getElementsByClassName("button")).forEach(function (e) {
+                e.addEventListener('click', this.getButtonPress);
+            });
+
+            document.getElementById('input').addEventListener('keypress', (e) => {
+                const key = e.keyCode ? e.keyCode : e.which;
+                if (this.resultShown) this.resultShown = false;
+                if (key === 42 ||
+                    key === 43 ||
+                    key === 45 ||
+                    key === 46 ||
+                    key === 47 ||
+                    (key >= 48 && key <= 57)) {
+                    return true
+                }
+                if (key === 13) {
+                    !this.resultShown && this.showResult();
+                }
+                e.preventDefault();
+            });
+        }
+        window.onload = () => {
+            init();
         };
     </script>
 </body>
